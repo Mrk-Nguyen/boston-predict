@@ -1,0 +1,50 @@
+version: 2.1
+
+orbs:
+  shellcheck: circleci/shellcheck@2.2.2
+
+workflows:
+  test_and_build:
+    jobs:
+      - shellcheck/check
+      - lint:
+          requires:
+            - shellcheck/check
+      - test:
+          requires:
+            - lint
+      # - build:
+      #     requires:
+      #       - test
+      #     filters:
+      #       branches:
+      #         only: master
+        
+jobs:
+  lint:
+    docker: 
+      - image: cimg/python:3.7.10
+
+    working_directory: ~/app
+
+    steps:
+      - checkout
+      - run: python -m pip install --upgrade pip
+      - run: pip install pylint, flake8
+      - run: |
+          flake8 --ignore=E202,E201,E225 app.py
+          pylint --disable=C0103 app.py
+  test:
+    docker:
+      - image: python:3.7-slim-buster
+
+    working_directory: ~/app
+
+    steps:
+      - checkout
+      - run: python -m pip install --upgrade pip
+      - run: pip install -r requirements.txt
+      - run: |
+          apt-get update
+          apt-get install libgomp1
+      - run: python -m unittest --verbose --failfast

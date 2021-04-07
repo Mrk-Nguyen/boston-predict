@@ -64,6 +64,5 @@ def score():
     return jsonify(status='error, model failed to load', score=-1)
 
 
-
 if __name__=='__main__':
     APP.run( debug=True, host='0.0.0.0', port=PORT )

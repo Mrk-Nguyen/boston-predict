@@ -123,8 +123,14 @@ def results(modelname: str, model: object ,
         None
     '''
 
-    #TODO
-    pass
+    preds_train = model.predict(X_train)
+    preds_holdout = model.predict(X_holdout)
+
+    metrics_train = get_metrics(Y_train, preds_train)
+    metrics_holdout = get_metrics(Y_holdout, preds_holdout)
+
+    results_train_df.loc[modelname] = metrics_train.values()
+    results_holdout_df.loc[modelname] = metrics_holdout.values()
     
 
 # %%

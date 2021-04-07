@@ -2,8 +2,8 @@ import numpy as np
 from collections.abc import Iterable
 
 # Build base class model
-'''Basic doc string'''
 class MeanRegressor(object):
+    '''Basic doc string'''
     def __init__(self):
         super().__init__()
         self._mean = 0
@@ -17,7 +17,7 @@ class MeanRegressor(object):
 
 # Build random regressor model
 class RandomRegressor(object):
-'''Basic doc string'''
+    '''Basic doc string'''
     def __init__(self):
         super().__init__()
         self._max = 100

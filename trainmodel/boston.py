@@ -26,7 +26,7 @@ import seaborn as sns
 
 from collections.abc import Iterable
 
-get_ipython().run_line_magic('matplotlib', 'inline')
+#get_ipython().run_line_magic('matplotlib', 'inline')
 
 
 # %%
@@ -190,12 +190,20 @@ print(results_holdout_df)
 
 # %%
 # Chosen model --------------------------------------------
-# TODO
-model = object
+model = lgbm_mdl
 
+# %%
 # Export chosen model to webapp
+with open("../model/model.pkl", "wb") as f:
+    pickle.dump(model, f)
 
 
-
-
+# %%
 # Export data for endpoint testing
+row_df = pd.DataFrame(X_train_df.loc[1]).T
+score = list(model.predict(row_df))
+
+with open('../test_resources/data.json','w') as f:
+    f.write(row_df.to_json(orient='records'))
+with open('../test_resources/score.json','w') as f:
+    f.write(json.dumps(score))

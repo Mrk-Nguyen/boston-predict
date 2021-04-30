@@ -3,6 +3,7 @@ from collections.abc import Iterable
 
 # Build base class model
 class MeanRegressor(object):
+'''Basic mean regressor class for Naive models'''
     def __init__(self):
         super().__init__()
         self._mean = 0
@@ -16,6 +17,7 @@ class MeanRegressor(object):
 
 # Build random regressor model
 class RandomRegressor(object):
+'''Basic random regressor class for Naive models'''
     def __init__(self):
         super().__init__()
         self._max = 100
